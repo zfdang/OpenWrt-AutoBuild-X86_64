@@ -1,16 +1,18 @@
-# AutoBuild-OpenWrt
+# 利用Github的Actions来编译openwrt的固件
 
-Build OpenWrt firware [Lean's OpenWrt](https://github.com/coolsnowwolf/lede) using GitHub Actions  
-Hereby thank P3TERX for his amazing job: https://github.com/P3TERX/Actions-OpenWrt/
+主要文件有3个：
 
-## Usage
+x86_64.config
+这个是利用./scripts/diffconfig 生成的diff版本的config文件
 
-- Sign up for [GitHub Actions](https://github.com/features/actions/signup)
-- Fork [this GitHub repository](https://github.com/esirplayground/AutoBuild-OpenWrt)
-- Click [.github/workflows] folder on the top of repo and you could see few workflow files, Each for one particular architecture(device).
-- Edit the workflow file you desire，uncomment push section 3 lines together and submit the commit.(Other 2 methods wait you to discover)
-- The build starts automatically. Progress can be viewed on the Actions page.
-- When the build is complete, click the `Artifacts` button in the upper right corner of the Actions page to download the binaries.
-- Default Web Admin IP: `192.168.5.1`, username `root`，password `password`
+customize.sh
+在编译固件前，进行的一些定制化的工作
 
-[For the details please visit my Y2B Channel (in Chinese) | 视频教程](https://www.youtube.com/c/esirplayground)
+.github/workflows/Build_OP_x86_64.yml
+利用Actions编译固件的脚本
+这个脚本里，会去 https://github.com/zfdang/lede 下载代码，并且利用上述的两个文件做定制化，最后进行编译。
+
+# 使用
+目前的设置是提交代码就自动触发编译。
+
+
