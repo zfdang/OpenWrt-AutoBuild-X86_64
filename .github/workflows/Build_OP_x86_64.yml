@@ -41,6 +41,8 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
 
+          echo "======================="
+          echo "Space usage:"
           df -h
 
     - name: Clone source code
@@ -50,14 +52,15 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-   #    sed -i '5s/#//' feeds.conf.default
         
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        ./scripts/feeds install -a
+        echo "======================="
+        echo "Space usage:"
+        df -h
 
     #- name: Import external feeds
     #  working-directory: ./openwrt
@@ -76,16 +79,24 @@ jobs:
     - name: Download package
       working-directory: ./openwrt
       run: |
-        make download -j$(nproc)
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
+          make download -j8 || make download -j1 V=s
+          find ./dl/ -size -1024c -exec rm -f {} \;
+          echo "======================="
+          echo "Space usage:"
+          df -h
 
     - name: Build firmware
       working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
-        make -j$(nproc) V=s
-
+        make -j$(nproc) || make -j1 V=s
+        
+        echo "======================="
+        echo "Space usage:"
+        echo "======================="
+        df -h
+        echo "======================="
+        du -h ./ --max-depth=1
 
     - name : Upload artifact - All
       uses: actions/upload-artifact@master
@@ -123,7 +134,6 @@ jobs:
       run: |
         zip ./openwrt-images.zip ./bin/targets/x86/64/
         zip ./openwrt-packages.zip ./bin/packages
-
 
     - name: Create Release
       id: create_release
