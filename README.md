@@ -15,4 +15,14 @@ customize.sh
 # 使用
 目前的设置是提交代码就自动触发编译。
 
+# 关于make defconfig
 
+```
+Defconfig
+make defconfig
+will produce a default configuration of the target device and build system, including a check of dependencies and prerequisites for the build environment.
+
+Defconfig will also remove outdated items from .config. E.g. references to non-existing packages or config options.
+
+It also checks the dependencies and will add possibly missing necessary dependencies. This can be used to “expand” a short .config recipe (like diffconfig output, possible even pruned further) to a full .config that the make process accepts.
+```
