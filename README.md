@@ -20,9 +20,13 @@ customize.sh
 ```
 Defconfig
 make defconfig
-will produce a default configuration of the target device and build system, including a check of dependencies and prerequisites for the build environment.
+will produce a default configuration of the target device and build system, including a check 
+of dependencies and prerequisites for the build environment.
 
-Defconfig will also remove outdated items from .config. E.g. references to non-existing packages or config options.
+Defconfig will also remove outdated items from .config. E.g. references to non-existing packages 
+or config options.
 
-It also checks the dependencies and will add possibly missing necessary dependencies. This can be used to “expand” a short .config recipe (like diffconfig output, possible even pruned further) to a full .config that the make process accepts.
+It also checks the dependencies and will add possibly missing necessary dependencies. This can
+be used to “expand” a short .config recipe (like diffconfig output, possible even pruned further)
+to a full .config that the make process accepts.
 ```
