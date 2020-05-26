@@ -81,6 +81,45 @@ jobs:
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
+    - name: Create ZIPs
+      working-directory: ./openwrt
+      run: |
+        zip ./openwrt-images.zip ./bin/targets/x86/64/
+        zip ./openwrt-packages.zip ./bin/packages
+  
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+    - name: Upload Release Asset - Images
+      id: upload-release-asset-images
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./openwrt/openwrt-images.zip
+          asset_name: openwrt-images.zip
+          asset_content_type: application/zip
+
+    - name: Upload Release Asset - Packages
+      id: upload-release-asset-packages
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./openwrt/openwrt-packages.zip
+          asset_name: openwrt-packages.zip
+          asset_content_type: application/zip
+
     - name : Upload artifact - All
       uses: actions/upload-artifact@master
       with:
