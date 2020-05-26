@@ -81,12 +81,45 @@ jobs:
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
 
+
+    - name : Upload artifact - All
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt-All.zip
+        path: openwrt/bin
+
+    - name : Upload artifact - Firmware Image
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt-Images.zip
+        path: openwrt/bin/targets/x86/64/*.img
+
+    - name : Upload artifact - Firmware VirtualBox Image
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt-Virtualbox.zip
+        path: openwrt/bin/targets/x86/64/*.vdi
+
+    - name : Upload artifact - Firmware VMware Image
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt-WMware.zip
+        path: openwrt/bin/targets/x86/64/*.vmdk
+
+    - name : Upload artifact - Package
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt-Packages.zip
+        path: openwrt/bin/packages/x86_64
+
+
     - name: Create ZIPs
       working-directory: ./openwrt
       run: |
         zip ./openwrt-images.zip ./bin/targets/x86/64/
         zip ./openwrt-packages.zip ./bin/packages
-  
+
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -119,33 +152,3 @@ jobs:
           asset_path: ./openwrt/openwrt-packages.zip
           asset_name: openwrt-packages.zip
           asset_content_type: application/zip
-
-    - name : Upload artifact - All
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt-All.zip
-        path: openwrt/bin
-
-    - name : Upload artifact - Firmware Image
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt-Images.zip
-        path: openwrt/bin/targets/x86/64/*.img
-
-    - name : Upload artifact - Firmware VirtualBox Image
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt-Virtualbox.zip
-        path: openwrt/bin/targets/x86/64/*.vdi
-
-    - name : Upload artifact - Firmware VMware Image
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt-WMware.zip
-        path: openwrt/bin/targets/x86/64/*.vmdk
-
-    - name : Upload artifact - Package
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt-Packages.zip
-        path: openwrt/bin/packages/x86_64
