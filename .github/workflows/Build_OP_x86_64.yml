@@ -79,7 +79,7 @@ jobs:
       working-directory: ./openwrt
       run: |
           make download -j8 || make download -j1 V=s
-          find ./dl/ -size -1024c -exec rm -f {} \;
+          # find ./dl/ -size -1024c -exec rm -f {} \;
           echo "======================="
           echo "Space usage:"
           df -h
@@ -87,7 +87,6 @@ jobs:
     - name: Build firmware
       working-directory: ./openwrt
       run: |
-        echo "::set-env BUILD_DATE=$(date)"
         echo -e "$(nproc) thread build."
         make -j$(nproc) || make -j1 V=s
         
@@ -95,7 +94,8 @@ jobs:
         echo "Space usage:"
         df -h
         echo "======================="
-        du -h ./ --max-depth=1
+        echo "Output folders status:"
+        du -h ./bin/ --max-depth=1
 
     - name : Upload artifact - All
       uses: actions/upload-artifact@master
