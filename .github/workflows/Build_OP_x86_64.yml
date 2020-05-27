@@ -134,14 +134,18 @@ jobs:
         zip -r ./openwrt-images.zip ./bin/targets/x86/64/
         zip -r ./openwrt-packages.zip ./bin/packages
 
+    - name: Get build date
+      id: get_build_date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S')"
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: TAG-$BUILD_DATE
-          release_name: Release $BUILD_DATE
+          tag_name: tag-${{ steps.get_build_date.outputs.date }}
+          release_name: Release ${{ steps.get_build_date.outputs.date }}
           draft: false
           prerelease: false
 
