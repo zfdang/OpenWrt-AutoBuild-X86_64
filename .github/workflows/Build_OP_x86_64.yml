@@ -1,8 +1,7 @@
 #=================================================
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: MIT
-# Author: eSirPlayground
-# Youtube Channel: https://goo.gl/fvkdwm 
+# Author: eSirPlayground, modified by zfdang
 #=================================================
 
 name: Build_x86_64
@@ -93,7 +92,6 @@ jobs:
         
         echo "======================="
         echo "Space usage:"
-        echo "======================="
         df -h
         echo "======================="
         du -h ./ --max-depth=1
