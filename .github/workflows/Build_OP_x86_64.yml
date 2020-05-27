@@ -67,7 +67,7 @@ jobs:
     #    git clone https://github.com/Lienol/openwrt-package package/lienol
     #    git clone "your_github_link" package/"your_folder_name"      
 
-    - name: Configuration Customization - Build_x86_64
+    - name: Configuration Customization
       env:
         CONFIG_FILE: 'x86_64.config'
       run: |
@@ -79,7 +79,6 @@ jobs:
       working-directory: ./openwrt
       run: |
           make download -j8 || make download -j1 V=s
-          # find ./dl/ -size -1024c -exec rm -f {} \;
           echo "======================="
           echo "Space usage:"
           df -h
