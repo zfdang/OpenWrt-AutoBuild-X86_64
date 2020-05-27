@@ -2,18 +2,21 @@
 
 主要文件有3个：
 
-x86_64.config
-这个是利用./scripts/diffconfig 生成的diff版本的config文件
+1. x86_64.config
 
-customize.sh
+这个是利用./scripts/diffconfig 生成的diff版本的config文件； 这个之后会利用make defconfig还原完整的.config文件
+
+2. customize.sh
+
 在编译固件前，进行的一些定制化的工作
 
-.github/workflows/Build_OP_x86_64.yml
-利用Actions编译固件的脚本
-这个脚本里，会去 https://github.com/zfdang/lede 下载代码，并且利用上述的两个文件做定制化，最后进行编译。
+3 .github/workflows/Build_OP_x86_64.yml
 
-# 使用
-目前的设置是提交代码就自动触发编译
+利用Actions编译固件的脚本；这个脚本里，会去 https://github.com/zfdang/lede 下载代码，并且利用上述的两个文件做定制化，最后进行编译。
+
+# 编译设置
+
+目前的设置是提交代码就触发自动编译；也会每周定时编译一份最新的代码；
 
 # 固件下载
 
@@ -25,6 +28,7 @@ Releases: https://github.com/zfdang/AutoBuild-OpenWrt/releases
 
 Actions:https://github.com/zfdang/AutoBuild-OpenWrt/actions?query=workflow%3ABuild_x86_64
 
+里面有不同的压缩包，请根据需要下载对应的文件。
 
 # 固件使用
 
@@ -36,7 +40,6 @@ LAN的IP地址是192.168.2.1
 
   用户名: root 
   密码: password
-
 
 
 # 关于make defconfig
