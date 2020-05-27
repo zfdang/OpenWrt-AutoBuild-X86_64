@@ -135,7 +135,9 @@ jobs:
 
     - name: Get build date
       id: get_build_date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S')"
+      run: |
+        echo "::set-output name=tag_name::$(date +'%Y.%m.%d_%H.%M')"
+        echo "::set-output name=release_name::$(date +'%Y-%m-%d %H:%M')"
 
     - name: Create Release
       id: create_release
@@ -143,8 +145,8 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: tag-${{ steps.get_build_date.outputs.date }}
-          release_name: Release ${{ steps.get_build_date.outputs.date }}
+          tag_name: tag-${{ steps.get_build_date.outputs.tag_name }}
+          release_name: Release ${{ steps.get_build_date.outputs.release_name }}
           draft: false
           prerelease: false
 
