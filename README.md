@@ -13,7 +13,31 @@ customize.sh
 这个脚本里，会去 https://github.com/zfdang/lede 下载代码，并且利用上述的两个文件做定制化，最后进行编译。
 
 # 使用
-目前的设置是提交代码就自动触发编译。
+目前的设置是提交代码就自动触发编译
+
+# 固件下载
+
+目前固件会每周编译一次，编译之前会从 https://github.com/coolsnowwolf/lede 获取最新的代码更新，然后开始编译。
+
+编译好的固件，可以从Releases处下载，也可以从Actions处下载:
+
+Releases: https://github.com/zfdang/AutoBuild-OpenWrt/releases
+
+Actions:https://github.com/zfdang/AutoBuild-OpenWrt/actions?query=workflow%3ABuild_x86_64
+
+
+# 固件使用
+
+固件的ETH0绑定LAN, ETH1绑定WAN.
+
+LAN的IP地址是192.168.2.1
+
+固件的登录信息：
+
+  用户名: root 
+  密码: password
+
+
 
 # 关于make defconfig
 
