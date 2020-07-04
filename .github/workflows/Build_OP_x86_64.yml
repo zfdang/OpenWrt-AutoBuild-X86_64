@@ -50,12 +50,11 @@ jobs:
         REPO_BRANCH: master
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt
 
     - name: Run Customization Script
-      working-directory: ./openwrt
+      working-directory: ./
       run: |
-        chmod +x ./customize.sh && ./customize.sh    
+        chmod +x ./customize.sh && ./customize.sh
 
     - name: Update & Install feeds
       working-directory: ./openwrt
@@ -126,11 +125,15 @@ jobs:
         path: openwrt/bin/packages/x86_64
 
 
-    - name: Create ZIPs
-      working-directory: ./openwrt
+    - name: Create ZIPs - Images
+      working-directory: ./openwrt/bin/targets/x86/64/
       run: |
-        zip -r ./openwrt-images.zip ./bin/targets/x86/64/
-        zip -r ./openwrt-packages.zip ./bin/packages
+        zip -r ./openwrt-images.zip ./
+
+    - name: Create ZIPs - Packages
+      working-directory: ./openwrt/bin/packages
+      run: |
+        zip -r ./openwrt-packages.zip ./
 
     - name: Get build date
       id: get_build_date
@@ -156,7 +159,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./openwrt/openwrt-images.zip
+          asset_path: ./openwrt/bin/targets/x86/64/openwrt-images.zip
           asset_name: openwrt-images.zip
           asset_content_type: application/zip
 
@@ -167,6 +170,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./openwrt/openwrt-packages.zip
+          asset_path: ./openwrt/bin/packages/openwrt-packages.zip
           asset_name: openwrt-packages.zip
           asset_content_type: application/zip
