@@ -51,7 +51,12 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        
+
+    - name: Run Customization Script
+      working-directory: ./openwrt
+      run: |
+        chmod +x ./customize.sh && ./customize.sh    
+
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
@@ -61,19 +66,13 @@ jobs:
         echo "Space usage:"
         df -h
 
-    #- name: Import external feeds
-    #  working-directory: ./openwrt
-    #  run: |
-    #    git clone https://github.com/Lienol/openwrt-package package/lienol
-    #    git clone "your_github_link" package/"your_folder_name"      
-
-    - name: Configuration Customization
+    - name: Generate Configuration
+      working-directory: ./openwrt
       env:
         CONFIG_FILE: 'x86_64.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x ./customize.sh && ./customize.sh
-        cd openwrt && make defconfig
+        make defconfig
         
     - name: Download package
       working-directory: ./openwrt
