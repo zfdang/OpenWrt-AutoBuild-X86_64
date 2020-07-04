@@ -128,6 +128,7 @@ jobs:
     - name: Create ZIPs - Images
       working-directory: ./openwrt/bin/targets/x86/64/
       run: |
+        rm -fr ./packages
         zip -r ./openwrt-images.zip ./
 
     - name: Create ZIPs - Packages
