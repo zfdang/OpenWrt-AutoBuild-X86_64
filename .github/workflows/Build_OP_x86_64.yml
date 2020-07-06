@@ -73,7 +73,11 @@ jobs:
         CONFIG_FILE: 'x86_64.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        cd openwrt && make defconfig
+        cd openwrt
+        echo "original config file:"
+        cat .config
+        make defconfig
+        echo "full config file:"
         cat .config
 
 
