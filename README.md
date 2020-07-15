@@ -70,9 +70,12 @@ chmod +x customize.sh
 
    make menuconfig
    ./scripts/diffconfig.sh > diffconf
+   
+   # virtualbox
    colordiff diffconf /var/www/html/diffconf.txt
    sudo cp -f diffconf /var/www/html/diffconf.txt
 
+   # t1 / t2
    colordiff diffconf /usr/share/nginx/html/diffconf.txt
    sudo cp -f diffconf /usr/share/nginx/html/diffconf.txt
 ```
