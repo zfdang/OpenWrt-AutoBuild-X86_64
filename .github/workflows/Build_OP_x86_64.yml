@@ -84,7 +84,7 @@ jobs:
     - name: Download package
       working-directory: ./openwrt
       run: |
-          make download -j8 || make download -j1 V=s
+          make download -j$(nproc) || make download -j1 V=s
           echo "======================="
           echo "Space usage:"
           df -h
