@@ -24,9 +24,9 @@
 
 编译好的固件，可以从Releases处下载，也可以从Actions处下载:
 
-Releases: https://github.com/zfdang/AutoBuild-OpenWrt/releases
+Releases: https://github.com/zfdang/OpenWrt-AutoBuild-X86_64/releases
 
-Actions:https://github.com/zfdang/AutoBuild-OpenWrt/actions?query=workflow%3ABuild_x86_64
+Actions:https://github.com/zfdang/OpenWrt-AutoBuild-X86_64/actions?query=workflow%3ABuild_x86_64
 
 里面有不同的压缩包，请根据需要下载对应的文件。
 
@@ -54,7 +54,7 @@ sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git
 
 4. 使用定制化脚本来customize openwrt
 ```
-wget https://raw.githubusercontent.com/zfdang/AutoBuild-OpenWrt/master/customize.sh
+wget https://raw.githubusercontent.com/zfdang/OpenWrt-AutoBuild-X86_64/master/customize.sh
 chmod +x customize.sh
 ./customize.sh
 ```
@@ -75,7 +75,7 @@ chmod +x customize.sh
 
 5. 使用config来进行编译
    
-上载diffconf到 https://github.com/zfdang/AutoBuild-OpenWrt/blob/master/x86_64.config
+上载diffconf到 https://github.com/zfdang/OpenWrt-AutoBuild-X86_64/blob/master/x86_64.config
 
 更新会自动触发编译。
 
