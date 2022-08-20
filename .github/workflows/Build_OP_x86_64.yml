@@ -32,6 +32,10 @@ jobs:
       env:
           DEBIAN_FRONTEND: noninteractive
       run: |
+          echo "======================="
+          echo "Space usage:"
+          df -h
+
           docker rmi `docker images -q`
           sudo -E apt-get update
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
